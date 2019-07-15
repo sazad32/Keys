@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Alert, Platform, StyleSheet, Text, View,ImageBackground ,Picker,TextInput,
        Image, Button} from 'react-native';
 
-export default class LogInPage extends Component<Props> {
 
+export default class LogInPage extends Component<Props> {
 
   constructor(props){
     super(props);
@@ -12,6 +12,7 @@ export default class LogInPage extends Component<Props> {
   }
 
   onLogIn = () => {
+    console.log(this.state.text);
       if(this.state.text == 'uneeb') {
         this.props.navigation.navigate('passwordList')
       }
@@ -44,11 +45,6 @@ export default class LogInPage extends Component<Props> {
             <View style={{justifyContent:'center', margin:10}}>
               <Button onPress= {this.onLogIn} title='Log In' color='#008B8B'></Button>
             </View>
-
-
-
-
-
       </View>
     );
   }
