@@ -16,9 +16,17 @@ export default class NewEntry extends Component<Props> {
 }
   onEntry = () => {
 
-    storage.push({name: this.state.name, username: this.state.username, password: this.state.password});
+    var id = storage.length;
+    id = id+1;
+    storage.push({key: id, name: this.state.name, username: this.state.username, password: this.state.password});
     //console.log(storage);
     this.props.navigation.navigate('passwordList',{items: storage})
+  }
+
+  onGenerate = () => {
+
+    var ranGen = Math.random().toString(36).substr(2, 7);
+    this.setState({password: ranGen});
   }
 
   render() {
@@ -26,8 +34,13 @@ export default class NewEntry extends Component<Props> {
     const {navigate} = this.props.navigation;
 
     return (
-      <View>
+      <View style={{backgroundColor:"#E0FFFF", flex: 1}}>
 
+        <View style={{justifyContent:'center', flexDirection: 'row', margin: 10}}>
+            <Text style={{fontSize: 20}}>Add a new Account</Text>
+       </View>
+
+      <View style={{justifyContent:'center', flexDirection: 'column', margin: 10, alignItems: 'center'}}>
         <TextInput
             style={{height: 40, width: 150, borderColor: 'black', borderWidth: 1, justifyContent: 'center'}}
             placeholder='Name of Account'
@@ -37,7 +50,7 @@ export default class NewEntry extends Component<Props> {
           />
 
           <TextInput
-              style={{height: 40, width: 150, borderColor: 'black', borderWidth: 1, justifyContent: 'center'}}
+              style={{height: 40, width: 150, borderColor: 'black', borderWidth: 1, justifyContent: 'center', margin: 10}}
               placeholder='Username'
               onChangeText={(username) => this.setState({username})}
               value={this.state.username}
@@ -51,6 +64,11 @@ export default class NewEntry extends Component<Props> {
                 value={this.state.password}
                 textAlign={'center'}
               />
+          </View>
+
+          <View style={{justifyContent:'center', margin:10}}>
+            <Button onPress= {this.onGenerate} title='Generate random password' color='#008B8B'></Button>
+          </View>
 
           <View style={{justifyContent:'center', margin:10}}>
             <Button onPress= {this.onEntry} title='Save' color='#008B8B'></Button>

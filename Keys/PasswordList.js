@@ -1,24 +1,30 @@
 import React, {Component} from 'react';
 import {Alert, Platform, StyleSheet, Text, View,ImageBackground ,Picker,
-       Image, TouchableOpacity, Button, FlatList} from 'react-native';
+       Image, TouchableOpacity, Button, FlatList, ScrollView} from 'react-native';
 import {List, ListItem} from 'react-native-elements';
 import storage from './storage';
 
 class FlatListItem extends Component<Props>{
 
+  press = () => {
+      this.props.navigate.navigate('showDetails', {item: this.props.item});
+  }
+
   render(){
 
     return(
+
       <View >
-          <TouchableOpacity  onPress={this.press} style = {{flex:1, borderWidth: 1 , margin: 5,  flexDirection: 'row'}}>
+          <TouchableOpacity  onPress={this.press} style = {{flex:1, borderWidth: 2, margin: 5,  flexDirection: 'row'}}>
 
           <View style={{flex:1, padding: 5,flexDirection:'column'}}>
-              <Text>{this.props.item.name}</Text>
-              <Text>{this.props.item.username}</Text>
+              <Text style={styles.letters}>{this.props.item.name}</Text>
+              <Text style={styles.letters}>{this.props.item.username}</Text>
           </View>
 
           </TouchableOpacity>
       </View>
+
     );
 
   }
@@ -31,20 +37,26 @@ export default class PasswordList extends Component<Props>{
  }
 
  onNewEntry = () => {
-   console.log("in new entry");
    //console.log(storage)
    this.props.navigation.navigate('newEntry')
+ }
+
+ onLogOut = () => {
+   //console.log(storage)
+   this.props.navigation.navigate('login')
  }
 
  render(){
    const {navigation} = this.props;
    const {navigate} = this.props.navigation;
    const items = navigation.getParam('items','');
+   const scrollEnabled = true;
 
    return(
-     <View>
+     <ScrollView style={{flex:1, backgroundColor: '#E0FFFF'}} scrollEnabled={scrollEnabled} keyboardShouldPersistTaps='always'>
+     <View style={styles.container}>
      <View style={{justifyContent:'center', flexDirection: 'row', margin: 10}}>
-         <Text>Your currently saved  passwords</Text>
+         <Text style={{fontSize: 20}}>Your currently saved passwords</Text>
     </View>
     <View>
          <FlatList
@@ -56,12 +68,37 @@ export default class PasswordList extends Component<Props>{
 
                   </FlatListItem>);
          }}/>
-         <View style={{justifyContent:'center', margin:10}}>
-           <Button onPress= {this.onNewEntry} title='New Entry' color='#008B8B'></Button>
-         </View>
+
 
      </View>
+
+     <View style={{justifyContent:'center', margin:10}}>
+       <Button onPress= {this.onNewEntry} title='New Entry' color='#008B8B'></Button>
      </View>
+
+     <View style={{justifyContent:'center', margin:10}}>
+       <Button onPress= {this.onLogOut} title='Log Out' color='#008B8B'></Button>
+     </View>
+
+     </View>
+     </ScrollView>
+
+
    );
  }
+
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#E0FFFF',
+  },
+  letters: {
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold'
+  }
+
+});

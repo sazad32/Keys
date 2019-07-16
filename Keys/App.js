@@ -12,18 +12,20 @@ import {createStackNavigator,createAppContainer} from 'react-navigation';
 import loginPage from './LogInPage';
 import passwordList from './PasswordList';
 import newEntry from './NewEntry';
+import showDetails from './ShowDetails';
 
 const NavigationApp = createStackNavigator ({
   login: {screen: loginPage},
   newEntry: {screen: newEntry},
-  passwordList: {screen: passwordList}
+  passwordList: {screen: passwordList},
+  showDetails: {screen: showDetails}
   },
   {
     headerMode:'none',
     navigationOptions:{
       headerVisible: false,
     }
-    });
+  });
 
 const Container = createAppContainer(NavigationApp);
 
